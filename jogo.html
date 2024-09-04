@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Hole.</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<script>
+    let jogoOn= true;
+    function joguete (){
+      if(!jogoOn) return;
+    }
+    function existe() {
+      if (!jogoAtivo) return;
+    }
+    function gameover(){
+          alert('Game over\n\nVocê morreu!!');
+          lfe = 0;
+          jogoOn = false;
+      }
+      function portamisteriosa() {  // Abre a função porta misteriosa
+          alert('Você abriu a porta');
+          alert('Você olha a sala, é uma sala úmida, nada além de pedras e um baú, você abre o baú com uma certa facilidade, lá tem uma espada antiga porém ainda afiada, uma armadura de prata um pouco amassada, e um cogumelo velho.');
+          let escolhaitem = prompt('Qual dos três você pega?\n\n1- Espada.\n2- Armadura.\n3- Cogumelo.');
+     
+          while (escolhaitem < 1 || escolhaitem > 3) {
+              escolhaitem = prompt('Escolha inválida. Qual dos três você pega?\n1- Espada.\n2- Armadura.\n3- Cogumelo.');
+          }
+     
+          alert('Você pega o item selecionado, e no momento seguinte o baú fecha violentamente.');
+          return escolhaitem; //Importante!!!!!! tem q retornar o valor
+      }
+     
+      function corredor() {
+          alert(' Você começa a percorrer o corredor gélido e desolado, seus passos ecoando na penumbra, cada ressoar amplificado pela ausência de qualquer outro som. Um calafrio percorre sua espinha, a sensação de algo perverso pairando no ar. De repente, uma figura grotesca e distorcida se revela à sua frente, seus olhos insanos brilhando na escuridão. Antes que você possa reagir, o monstro emite um grito agudo e ensurdecedor, um lamento que atravessa o silêncio opressor e arranha a própria essência do medo.\n\n\n- VOCÊ MORRE AQUI, INFERIOR. GOLINHO MATA VOCÊ.');
+          alert('Golinho avança atrás de você com uma velocidade inesperada, seus passos ressoando com uma urgência ameaçadora no corredor sombrio. O medo se agarra ao seu peito, mas você não hesita. Com mãos trêmulas, você desembainha sua espada, o metal frio refletindo a pálida luz que penetra a escuridão. Você se prepara para o encontro fatal, a lâmina erguida em um gesto de desespero e determinação, sabendo que cada movimento pode ser o último. O ar ao seu redor se torna denso com a iminência da morte, e a sombra de Golinho se aproxima, carregando consigo a promessa de um destino cruel.');
+      }
+     
+      let nome = prompt('Olá guerreiro, qual é seu nome?');
+      alert(nome + ', seja muito bem-vindo à Black Hole!!');
+     
+      alert('Você cai em um buraco e se vê com a seguinte escolha, do seu lado esquerdo você nota uma porta grande de madeira cor sangue, uma madeira velha e inóspita, e ao seu lado direito você encontra um corredor longo e sem luz, impossibilitando assim de se ver o final.');
+     
+      let escolha = prompt('Qual vai ser sua decisão? \n\n1- Você pode tentar abrir a porta nada chamativa\n2- Você pode saber o que tem no fim do corredor.');
+     
+      var atk = 15; //Vida do jogador
+      var df = 10; //Defesa do jogador
+      var lfe = 30; //Vida do Jogador   (lembrando que os 3 devem ser variáveis, pois terão mudanças na gameplay)
+      var money = 10; //Dinheiro do jogador, sempre começará com 10 pra curar as feridas no vendedor antes de começar a luta final
+     
+      if (escolha == 1) {
+          let item = portamisteriosa();
+          if (item == '1') {
+              atk += 5;
+              alert('Ao segurar a espada, você sente algo esquisito, um tipo de sentimento totalmente diferente, uma sabedoria te guia, uma sabedoria de um Rei.');
+          } else if (item == '2') {
+              df += 10;
+              alert('No momento que você veste a armadura, você sente um estranho sentimento de proteção, mesmo que ela esteja amassada, parece que a pessoa que conseguiu amassar foi de uma força gigantesca.');
+          } else if (item == '3') {
+              lfe += 30;
+              alert('Ao comer aquele cogumelo, você se sente mais resistente, parece que aquela velhice e aquela textura espessa eram coisas boas.');
+          }
+          alert(`Você sente sua força aumentando! \n\natk: ${atk}\ndefesa: ${df}\nvida: ${lfe}\ndinheiro: ${money}`);
+          corredor();
+      } else if (escolha == 2) {
+          corredor();
+   
+      }
+     
+      let atkg = Math.floor(Math.random() * 20) + 1; // ataque randomico do Golinho, assim ele sempre dará de 0 a 20 de dano no player
+      let dfG = 10; //Def padrão do Golinho
+      let lfeG = 20; // Vida padrão do Golinho (se o jogador pegar a espada no inicio ele pode dar Hit Kill no Golinho, isso não é um bug)
+     
+      while (lfeG > 0 && lfe > 0) {
+      let atkg = Math.floor(Math.random() * 20) + 1;
+      let dano = atkg + atk - dfG;
+      if (dano > 0) {
+          lfeG -= dano;
+          alert(nome + ' deu ' + dano + ' de dano no Golinho.' + '\n\nvida do Golinho: ' + lfeG);
+      } else {
+          alert('Golinho desviou do ataque!');
+      }
+   
+      let danoGolinho = Math.floor(Math.random() * 30) + 1;
+      let danoGolinhoEfetivo = danoGolinho - df;
+      if (danoGolinhoEfetivo > 0) {
+          lfe -= danoGolinhoEfetivo;
+          alert('Golinho deu ' + danoGolinhoEfetivo + ' de dano no ' + nome + '.' + '\n\n vida do ' + nome + ': ' + lfe);
+      } else {
+          alert('Golinho errou o ataque!');
+      }
+   
+      if (lfe <= 0 || lfeG <= 0) {
+          break;
+      }
+  }
+   
+     
+      if (lfe <= 0) {
+          gameover()
+      } else if (lfeG <= 0) {
+          alert('Golinho foi derrotado!');
+          const dropGolinho = Math.floor(Math.random() * 10) + 1;
+          money += dropGolinho
+          alert('Seu dinheiro: ' + money)
+          dragao()
+   
+   
+      }
+  function dragao(){
+    alert('Você vê um ovo titânico se rachando com um estalo sinistro, e antes que possa reagir, um dragão filhote emerge das sombras, vomitando chamas aterradoras. Sua única esperança de sobrevivência é uma chance de 19 em 20, mas a sensação de que o destino já está selado te assola.');
+   
+    let escolhasorte = parseInt(prompt('Digite um número de 1 a 20: ', 10));
+    let numerosorte = Math.floor(Math.random() * 20) + 1;
+    if (escolhasorte === numerosorte) {
+      let item = 1;
+      if (item === 1 || item === 3){
+        alert('Você morreu queimado pelo Dragão filhote, sua pele derreteu rapidamente e você não sentiu dor em sua morte.')
+      } else if (item === 2){
+        alert('Você morreu queimado pelo Dragão filhote, sua pele derreteu devagarmente, o ferro da armadura esquentou e derreteu no seu corpo todo e você sofreu nesses 3 longos minutos mais do que você sofreu em sua vida inteira.')
+      }
+    } else {
+      alert('Você conseguiu escapar do ataque do Dragão filhote!');
+    }
+   
+    let escama = prompt('Após o filhote errar o seu alvo e voar para longe, você observa que várias escamas de dragão permaneceram no ovo. Agora, diante dessa oportunidade, você deve decidir o que fazer com elas: \n\n1- Integrar às suas armas, infundindo seu ataque com a força e o poder das escamas dracônicas.\n2- Incorporar à sua armadura, aumentando a resistência e a proteção contra futuros ataques. \n\n Cada escolha carrega consigo um risco e uma promessa, e sua decisão pode determinar o desfecho de sua próxima batalha.')
+    if (escama === '1'){
+      atk += 10;
+    } else if (escama === '2'){
+      df += 10;
+    }
+    alert(`Você sente sua força aumentando! \n\natk: ${atk}\ndefesa: ${df}\nvida: ${lfe}\ndinheiro: ${money}`);
+    orelha()
+  }
+  function orelha() {
+    alert('Após tudo isso, você se tornou uma sombra cautelosa, os olhos escaneando o vazio à sua frente com uma ansiedade crescente. O tempo parecia dilatar-se em um silêncio opressivo até que, repentinamente, uma presença perturbadora se materializa diante de você. Uma criatura grotesca, com orelhas monstruosas que se estendem em sinistros tentáculos de carne, um par de trapos insensatos como única proteção, e um corpo aberrante, rígido e cúbico como um pesadelo deformado. No instante em que seus olhares se encontram, o ar se torna denso com uma tensão palpável, e um presságio de violência e desolação permeia o ambiente. A preparação para o combate se dá em um silêncio carregado, enquanto a escuridão parece engolir qualquer esperança de redenção.');
+   
+    const atkOrelha = 20; // Ataque do Orelha
+    const defOrelha = 10; // Defesa do Orelha
+    let lefOrelha = 40; // Vida do Orelha
+   
+    while (lefOrelha > 0 && lfe > 0) {
+        // Ataque do jogador
+        const playerAttack = Math.floor(Math.random() * atk) + 1;
+        const dmg = playerAttack - defOrelha;
+        if (dmg > 0) {
+            lefOrelha -= dmg;
+            alert(`Você deu ${dmg} de dano no Orelha. \n\nVida do Orelha: ${lefOrelha}`);
+        } else {
+            alert('Orelha desviou do ataque! \n\nVida do Orelha: ' + lefOrelha);
+        }
+   
+        // Ataque do Orelha
+        if (lefOrelha > 0) {
+            const orelhaDmg = Math.floor(Math.random() * atkOrelha) + 1;
+            const effectiveDmg = orelhaDmg - df;
+            if (effectiveDmg > 0) {
+                lfe -= effectiveDmg;
+                alert(`Orelha deu ${effectiveDmg} de dano em você.\n\nSua vida: ${lfe}`);
+            } else {
+                alert('Orelha errou o ataque!\n\nSua vida: ' + lfe);
+            }
+        }
+   
+        // Verifica se a vida do jogador ou do Orelha chegou a 0 ou menos
+        if (lfe <= 0) {
+            gameover();
+            break;
+        } else if (lefOrelha <= 0) {
+            alert('Você derrotou o Orelha!');
+            const dropOrelha = Math.floor(Math.random() * 20) + 1;
+            money += dropOrelha;
+            alert('Seu dinheiro: ' + money);
+            buraco();
+            break; // Garante que o loop pare após derrotar o Orelha e chamar buraco()
+        }
+    }
+}
+
+   
+   
+  function buraco(){
+      let resposta = prompt('Você vê um buraco no chão mas encima uma espada está pendurada em uma corda, você percebe que aquela espada seria muito útil pra qualquer situação, mas tambem percebe que seria muito útil nas suas missões, voce quer tentar pegar a espada?   \n\n\nobs: apenas sim/nao')
+      if (resposta.toLowerCase() === 'sim'){
+          alert('Você tenta pegar a espada...')
+          numero = Math.floor(Math.random() * 2) + 1;
+          if (numero === 2){
+              gameover()
+          }else{
+              alert('Você conseguiu pegar a espada, parabens!!!\n\n E ainda tinha um dinheirinho na bainha da espada!!')
+              atk += 40;
+              dropEspada = Math.floor(Math.random() * 20) + 1;
+              money += dropEspada
+              alert(`Você sente sua força aumentando! \n\natk: ${atk}\ndefesa: ${df}\nvida: ${lfe}\ndinheiro: ${money}`);
+              vendedor()
+          }
+      }else if (resposta.toLowerCase() === 'nao'){
+          alert('Você não deciciu pegar a espada, pulou o buraco e passou tranquilamente, talvez seja melhor assim....')
+          vendedor()
+      }else{
+          alert("ERRO: Responda com 'sim' ou 'nao'.")
+      }
+   
+  }
+   
+  function vendedor(){
+    alert("Após tudo isso você se sente um pouco mal, seja pelas porradas que você levou dos inimigos antes ou seja pelo ambiente em si, mas a sorte parece que esta virando ao seu favor, você vê um esqueleto praticamente 'vivo',mexendo em poções brilhosas e alquimias do mundo antigo que talvez ninguém entenda.")
+    alert("Ele olha pra você e fala\n\n- OLhA, FAz tEMpO qUE nÃo VEJO ninGUÉm nESSE LUgAR FÉtIDo. TOME, CORTEsia DA CAsa.")
+    
+    lfe += 10
+    alert('Você toma aquela poção vermelha e se sente MUITO melhor. Você regenerou 10 pontos\n\nvida: ' + lfe)
+    
+    let comprinha = true;
+    while (comprinha){
+
+      venda = prompt('OLhA AqUI, MEnInO, EU tEnHO mAIs DISso, SE qUIzEr. MESmo REgenERAdO, ELa TRAz UMa pAz DELIcIOSA. EAi VAi lEVar? Só 10 moEdiNHas. \n\n sim/nao\n\n dinheiro: ' + money).toLowerCase()
+      if (venda === 'sim'){
+        if (money >= 10){
+          alert('HUHUHHUHUHUHUHU TOme aQUi SUa pOÇãO!!');
+          lfe += 10;
+          money -= 10;
+          alert('Vida: ' + lfe);
+
+        } else {
+          alert('DESculPE, mEnInO, sÓ ACeiTO 10 MOeDAs pRA CIMa...\n\n\nSem dinheiro, você foi embora de lá');
+          comprinha = false;
+          boss()
+        }
+      } else if (venda === 'nao'){
+        alert('AHH, UMa pEnA qUE VOCÊ nÃO qUERER, mAs ACHO qUE vAI pREcISAR DOS MEUs sErvIçOs DEpOIs HUHUHUHUHUHUHUHUHU');
+        comprinha = false;
+        boss()
+      }
+    }
+  }
+  function boss(){
+    atkB = Math.floor(Math.random() * 30) + 1;
+    defB = 5;
+    lfeB = 300;
+
+    alert('É o fim da sua jornada.');
+    alert('Lá esta ele.');
+    alert('O motivo de você ter vindo pra cá.')
+    alert('Foi ele.')
+    alert('Ele matou seu pai.')
+    alert('Ele deve...')
+    alert('Morrer.')
+    
+    while (lfeB > 0 && lfe > 0) {
+        // Ataque do jogador
+        const playerAttack = Math.floor(Math.random() * atk) + 1;
+        const dmg = playerAttack - defB;
+        if (dmg > 0) {
+            lfeB -= dmg;
+            alert(`Você deu ${dmg} de dano no Dragão Ancestral. \n\nVida do Dragão Ancestral: ${lfeB}`);
+        } else {
+            alert('Dragão Ancestral desviou do ataque! \n\nVida do Dragão Ancestral: ' + lfeB);
+        }
+   
+        // Ataque do Dragão Ancestral
+        if (lfeB > 0) {
+            const DragãoDmg = Math.floor(Math.random() * atkB) + 1;
+            const effectiveDragao = DragãoDmg - df;
+            if (effectiveDragao > 0) {
+                lfe -= effectiveDragao;
+                alert(`Dragão Ancestral deu ${effectiveDragao} de dano em você.\n\nSua vida: ${lfe}`);
+            } else {
+                alert('Dragão Ancestral errou o ataque!\n\nSua vida: ' + lfe);
+            }
+        }
+   
+        // Verifica se a vida do jogador ou do Dragão Ancestral chegou a 0 ou menos
+        if (lfe <= 0) {
+            alert('É isso.... tudo para nada.... acabou......');
+            gameover();
+            break;
+        } else if (lfeB <= 0) {
+            alert('Você derrotou o Dragão Ancestral!');
+            const dropDragão = Math.floor(Math.random() * 2000000) + 1;
+            money += dropDragão;
+            alert('Seu dinheiro: ' + money + '\n\n\n Estamos ricos, mas a que preço...');
+        }
+      }
+  }
+    
+  </script>
+  <body>
+      <h1>Obrigado por jogar!!!</h1>
+      <h1>Por favor, atualize a página para tentar novamente.</h1>
+  </body>
+  </html>
